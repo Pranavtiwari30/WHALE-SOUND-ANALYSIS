@@ -6,8 +6,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Specify paths
-audio_file = r"C:\\Users\\vijay\\Desktop\\whale\\audio_file.wav"
-output_dir = r"C:\\Users\\vijay\\Desktop\\whale\\output_dir"
+audio_file = r"C:\\Users\\Pranav\\Desktop\\whale\\audio_file.wav"
+output_dir = r"C:\\Users\\Pranav\\Desktop\\whale\\output_dir"
 
 def process_audio_to_images(audio_file, output_dir, chunk_duration=3, sr=22050):
     """
@@ -19,7 +19,7 @@ def process_audio_to_images(audio_file, output_dir, chunk_duration=3, sr=22050):
     - chunk_duration (int): Duration of each chunk in seconds.
     - sr (int): Sampling rate for audio processing.
     """
-    # Ensure the output directory exists
+    # Ensure the output directory exists in form of output_dir
     os.makedirs(output_dir, exist_ok=True)
     print(f"Output directory: {output_dir}")
     if not os.path.exists(audio_file):
@@ -39,7 +39,7 @@ def process_audio_to_images(audio_file, output_dir, chunk_duration=3, sr=22050):
         end_sample = start_sample + chunk_length_samples
         chunk = y[start_sample:end_sample]
         
-        # Create the Mel spectrogram
+        # Create spectrogram from audio file
         plt.figure(figsize=(10, 4))
         S = librosa.feature.melspectrogram(y=chunk, sr=sr, n_mels=128, fmax=8000)
         S_dB = librosa.power_to_db(S, ref=np.max)
@@ -51,10 +51,9 @@ def process_audio_to_images(audio_file, output_dir, chunk_duration=3, sr=22050):
         # Save the plot as an image
         output_image_path = os.path.join(output_dir, f"chunk_{i}.png")
         plt.savefig(output_image_path)
-        plt.close()  # Close the figure to avoid overlap
+        plt.close() 
         print(f"Saved spectrogram: {output_image_path}")
 
     print(f"Processed {total_chunks} chunks and saved spectrogram images to {output_dir}")
 
-# Call the function
 process_audio_to_images(audio_file, output_dir)
