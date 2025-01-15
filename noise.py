@@ -39,7 +39,7 @@ def process_audio_to_images(audio_file, output_dir, chunk_duration=3, sr=22050):
         end_sample = start_sample + chunk_length_samples
         chunk = y[start_sample:end_sample]
         
-        # Create spectrogram from audio file
+        # Create spectrogram from audio file of noise
         plt.figure(figsize=(10, 4))
         S = librosa.feature.melspectrogram(y=chunk, sr=sr, n_mels=128, fmax=8000)
         S_dB = librosa.power_to_db(S, ref=np.max)
